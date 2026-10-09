@@ -1,0 +1,94 @@
+{
+  "manifest_version": 3,
+  "name": "XrnFocus \u2014 Time & Schedule Blocker",
+  "version": "1.0.0",
+  "description": "Give YouTube, Reddit, X, Instagram and Facebook a daily time budget and off-limits hours. Shared pool, per-site caps, and an override that costs you something.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "idle",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.reddit.com/*",
+    "*://*.redd.it/*",
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.instagram.com/*",
+    "*://*.facebook.com/*",
+    "*://*.fb.com/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background/background.js",
+    "scripts": [
+      "shared/constants.js",
+      "shared/rules.js",
+      "background/background.js"
+    ]
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.reddit.com/*",
+        "*://*.redd.it/*",
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.instagram.com/*",
+        "*://*.facebook.com/*",
+        "*://*.fb.com/*"
+      ],
+      "js": [
+        "shared/constants.js",
+        "content/content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "block/block.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "xrnfocus@local.extension",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XrnFocus settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<main>
+  <header class="page-head">
+    <h1>XrnFocus</h1>
+    <span class="saved" id="saved">Saved</span>
+  </header>
+
+  <div class="layout">
+    <section class="card sites-card">
+      <h2>Sites</h2>
+      <div id="sites" class="sites"></div>
+      <div class="add-row">
+        <input type="text" id="newSite" placeholder="add a domain, e.g. news.ycombinator.com" autocomplete="off" spellcheck="false">
+        <button id="addSite" class="btn ghost">Add site</button>
+      </div>
+      <p class="err" id="addErr"></p>
+    </section>
+
+    <aside class="side">
+      <section class="card">
+        <h2>The day</h2>
+        <p class="hint">Counters roll over at this hour rather than at midnight, so a late-night
+           session still counts against the day it belongs to.</p>
+        <div class="field">
+          <label for="resetHour">Reset at</label>
+          <select id="resetHour" data-path="resetHour" data-type="number"></select>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Shared pool</h2>
+        <p class="hint">One allowance that every site marked <em>in pool</em> draws from together.
+           A site can have its own cap as well — whichever runs out first blocks it.</p>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="poolEnabled" data-path="pool.enabled" data-type="bool">
+            <span>Use a shared pool</span>
+          </label>
+        </div>
+        <div class="field">
+          <label for="poolMinutes">Pool size</label>
+          <input type="number" id="poolMinutes" data-path="pool.minutes" data-type="number" min="0" max="1440" step="5">
+          <span class="unit">minutes / day</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Overrides</h2>
+        <p class="hint">What it takes to get past a block. The phrase and the wait are both
+           checked in the background, so neither can be skipped from the page.</p>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="ovEnabled" data-path="override.enabled" data-type="bool">
+            <span>Allow overrides</span>
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="ovPhrase">Phrase to type</label>
+          <input type="text" id="ovPhrase" data-path="override.phrase" class="wide" spellcheck="false">
+        </div>
+        <p class="hint tight">Leave empty to skip the typing step. Case and spacing are ignored.</p>
+
+        <div class="grid3">
+          <div class="field col">
+            <label for="ovDelay">Wait</label>
+            <input type="number" id="ovDelay" data-path="override.delaySeconds" data-type="number" min="0" max="600" step="5">
+            <span class="unit">seconds</span>
+          </div>
+          <div class="field col">
+            <label for="ovGrant">Grants</label>
+            <input type="number" id="ovGrant" data-path="override.grantMinutes" data-type="number" min="1" max="180" step="1">
+            <span class="unit">minutes</span>
+          </div>
+          <div class="field col">
+            <label for="ovMax">Limit</label>
+            <input type="number" id="ovMax" data-path="override.maxPerDay" data-type="number" min="0" max="20" step="1">
+            <span class="unit">per day</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="ovPerSite" data-path="override.perSite" data-type="bool">
+            <span>That daily limit is per site (otherwise it's one budget across all sites)</span>
+          </label>
+        </div>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="ovForLimits" data-path="override.forLimits" data-type="bool">
+            <span>Can override a spent time budget</span>
+          </label>
+        </div>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="ovForSchedule" data-path="override.forSchedule" data-type="bool">
+            <span>Can override a time-of-day block</span>
+          </label>
+        </div>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="ovForBreaks" data-path="override.forBreaks" data-type="bool">
+            <span>Can override a forced break</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Counting &amp; warnings</h2>
+        <div class="field">
+          <label for="warnAt">Warn me at</label>
+          <input type="text" id="warnAt" data-path="warnAtMinutes" data-type="minutes" placeholder="5, 1">
+          <span class="unit">minutes left</span>
+        </div>
+        <p class="hint tight">Comma-separated. Empty turns the on-page warning off.</p>
+
+        <div class="field">
+          <label for="idleSeconds">Pause the clock after</label>
+          <input type="number" id="idleSeconds" data-path="idleSeconds" data-type="number" min="15" max="1800" step="15">
+          <span class="unit">seconds of no input</span>
+        </div>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="countWhileAudible" data-path="countWhileAudible" data-type="bool">
+            <span>Keep counting while the tab is playing audio</span>
+          </label>
+        </div>
+        <p class="hint tight">Leave this on, or a 40-minute video you never touch gets billed as one minute.</p>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="clockEnabled" data-path="clock.enabled" data-type="bool">
+            <span>Show a small clock in the corner of tracked pages</span>
+          </label>
+        </div>
+        <div class="field">
+          <label for="clockPosition">Clock corner</label>
+          <select id="clockPosition" data-path="clock.position">
+            <option value="bottom-right">bottom right</option>
+            <option value="bottom-left">bottom left</option>
+            <option value="top-right">top right</option>
+            <option value="top-left">top left</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Today</h2>
+        <div id="today" class="today"></div>
+        <div class="row-btns">
+          <button id="clearUsage" class="btn ghost">Reset today's counters</button>
+          <button id="export" class="btn ghost">Export settings</button>
+          <button id="import" class="btn ghost">Import settings</button>
+          <button id="restore" class="btn danger">Restore defaults</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json" hidden>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<template id="site-tpl">
+  <div class="site">
+    <div class="site-head">
+      <label class="check">
+        <input type="checkbox" class="s-enabled">
+        <b class="s-label"></b>
+      </label>
+      <button class="btn tiny danger s-remove" hidden>Remove</button>
+    </div>
+
+    <div class="site-body">
+      <div class="field">
+        <label>Domains</label>
+        <input type="text" class="s-domains wide" spellcheck="false">
+      </div>
+      <div class="field">
+        <label>Never block</label>
+        <input type="text" class="s-exclude wide" spellcheck="false" placeholder="none">
+      </div>
+      <p class="hint tight">Comma-separated. Each covers its subdomains. An exception wins over everything.</p>
+
+      <div class="grid2">
+        <div class="field col">
+          <label>Own cap</label>
+          <input type="number" class="s-limit" min="0" max="1440" step="5">
+          <span class="unit">min/day · 0 = none</span>
+        </div>
+        <div class="field col">
+          <label class="check">
+            <input type="checkbox" class="s-inpool">
+            <span>Draws from the shared pool</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field wrap-tight">
+        <label class="check">
+          <input type="checkbox" class="s-seson">
+          <span>Break after</span>
+        </label>
+        <input type="number" class="s-seswork" min="1" max="600" step="5">
+        <span class="unit">min of use, for</span>
+        <input type="number" class="s-sesbreak" min="1" max="120" step="1">
+        <span class="unit">min</span>
+      </div>
+      <p class="hint tight">Counts a single stretch, not the day. Stay away for a whole
+         break and the stretch resets on its own.</p>
+
+      <div class="field">
+        <label>Hours</label>
+        <select class="s-schedmode">
+          <option value="off">no time-of-day rule</option>
+          <option value="blockDuring">blocked during these windows</option>
+          <option value="allowOnly">allowed only during these windows</option>
+        </select>
+      </div>
+      <div class="windows"></div>
+      <button class="btn tiny ghost s-addwin" hidden>Add a window</button>
+    </div>
+  </div>
+</template>
+
+<template id="window-tpl">
+  <div class="win">
+    <div class="days"></div>
+    <input type="time" class="w-start">
+    <span class="dash">→</span>
+    <input type="time" class="w-end">
+    <button class="btn tiny quiet w-remove" title="Remove">✕</button>
+  </div>
+</template>
+
+<script src="../shared/constants.js"></script>
+<script src="../shared/rules.js"></script>
+  <script src="../shared/ui.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

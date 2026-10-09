@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blocked</title>
+  <link rel="stylesheet" href="block.css">
+</head>
+<body>
+  <main class="card">
+    <div class="mark" aria-hidden="true"></div>
+
+    <h1 id="headline">Time's up</h1>
+    <p class="lede" id="lede"></p>
+
+    <section class="bars" id="bars"></section>
+
+    <p class="resumes" id="resumes"></p>
+
+    <div class="actions">
+      <button id="close" class="btn primary">Close tab</button>
+    </div>
+
+    <section class="override" id="override" hidden>
+      <div class="rule"><span>or</span></div>
+
+      <div id="ov-start">
+        <p class="ov-lede" id="ov-lede"></p>
+        <button id="ov-begin" class="btn ghost">Override anyway</button>
+      </div>
+
+      <div id="ov-form" hidden>
+        <label for="phrase" class="ov-label">Type this, exactly:</label>
+        <p class="phrase" id="phrase-target"></p>
+        <input id="phrase" type="text" autocomplete="off" autocapitalize="off"
+               spellcheck="false" placeholder="Type it out">
+        <div class="wait" id="wait"></div>
+        <div class="ov-actions">
+          <button id="ov-claim" class="btn primary" disabled>Unlock</button>
+          <button id="ov-cancel" class="btn quiet">Never mind</button>
+        </div>
+        <p class="err" id="ov-err" role="alert"></p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span id="tally"></span>
+      <a href="#" id="settings">Settings</a>
+    </footer>
+  </main>
+
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/rules.js"></script>
+  <script src="../shared/ui.js"></script>
+  <script src="block.js"></script>
+</body>
+</html>

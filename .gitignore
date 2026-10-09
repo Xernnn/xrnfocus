@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# build output
+web-ext-artifacts/
+*.zip
+*.xpi
+*.crx
+
+# extension signing keys: never commit
+*.pem
+
+# logs
+*.log
+npm-debug.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

@@ -1,0 +1,132 @@
+:root {
+  --bg: #f4f5f8; --card: #ffffff; --ink: #171a21; --muted: #5d6474;
+  --line: #e2e5ea; --accent: #3f6fd1; --warn: #c1442e; --grant: #b8791f;
+  --track: #e9ebf0; --inset: #f7f8fa;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101219; --card: #191c23; --ink: #e9ecf2; --muted: #949cad;
+    --line: #2a2f3a; --accent: #6f9bf0; --warn: #e2705a; --grant: #e0a44a;
+    --track: #262b36; --inset: #14171d;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 32px 16px 64px;
+  background: var(--bg); color: var(--ink);
+  font: 400 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (min-width: 760px) { body { padding: 28px 32px 64px; } }
+
+/* The whole tab, not a middle column: the sites take the wide pane and tile
+   across it, the page-wide settings sit in a sidebar beside them. Narrower
+   than that, the two stack into one full-width column. */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 20px; align-items: start; }
+@media (min-width: 1100px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 420px; }
+}
+
+.page-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+h1 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+.saved {
+  font-size: 12px; color: var(--muted);
+  opacity: 0; transition: opacity .2s ease;
+}
+.saved.on { opacity: 1; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px 22px; margin-bottom: 16px;
+}
+h2 { margin: 0 0 4px; font-size: 15px; letter-spacing: -.01em; }
+.hint { margin: 0 0 16px; font-size: 12.5px; color: var(--muted); max-width: 58ch; }
+.hint.tight { margin: -6px 0 14px; }
+
+.field { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.field > label:not(.check) { min-width: 132px; font-size: 13px; color: var(--muted); }
+.field.col { display: grid; gap: 5px; align-content: start; }
+.field.col > label { min-width: 0; }
+.unit { font-size: 12px; color: var(--muted); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 12px; }
+@media (max-width: 560px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+input[type=text], input[type=number], input[type=time], select {
+  font: inherit; font-size: 13.5px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 7px; padding: 7px 9px;
+}
+input[type=number] { width: 84px; }
+#warnAt { width: 110px; }
+input.wide { flex: 1; min-width: 200px; }
+input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+
+.check { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13.5px; }
+.check input { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
+
+.btn {
+  font: inherit; font-size: 13px; font-weight: 550;
+  padding: 7px 14px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--ink);
+}
+.btn:hover { border-color: var(--muted); }
+.btn.ghost { color: var(--muted); }
+.btn.ghost:hover { color: var(--ink); }
+.btn.danger { color: var(--warn); border-color: transparent; }
+.btn.danger:hover { border-color: var(--warn); }
+.btn.quiet { border-color: transparent; color: var(--muted); padding: 4px 8px; }
+.btn.tiny { font-size: 12px; padding: 4px 10px; }
+
+/* sites */
+.sites {
+  display: grid; gap: 12px; margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
+}
+.site { border: 1px solid var(--line); border-radius: 10px; background: var(--inset); }
+.site-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 14px; border-bottom: 1px solid var(--line);
+}
+.site-head b { font-size: 14px; }
+.site-body { padding: 14px; }
+/* Site cards are a column of a grid now, not the page's full width: shorter
+   labels and a select that fills the row keep "Hours" on one line. */
+.site-body .field > label:not(.check) { min-width: 92px; }
+.site-body .s-schedmode { flex: 1; min-width: 0; }
+.site.off .site-body { opacity: .45; pointer-events: none; }
+
+.windows { display: grid; gap: 8px; margin: 4px 0 10px; }
+.win {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+}
+.days { display: flex; gap: 3px; }
+.day {
+  width: 27px; height: 26px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent;
+  font: 600 10.5px/1 system-ui, sans-serif; color: var(--muted);
+}
+.day.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.dash { color: var(--muted); }
+
+.add-row { display: flex; gap: 8px; align-items: center; max-width: 560px; }
+.add-row input { flex: 1; }
+.err { margin: 8px 0 0; font-size: 12.5px; color: var(--warn); min-height: 16px; }
+
+/* today */
+.today { display: grid; gap: 10px; margin-bottom: 16px; }
+.t-row { display: grid; gap: 4px; }
+.t-head { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
+.t-head b { color: var(--ink); font-weight: 600; }
+.track { height: 6px; border-radius: 3px; background: var(--track); overflow: hidden; }
+.fill { height: 100%; border-radius: 3px; background: var(--accent); }
+.fill.full { background: var(--warn); }
+.fill.grant { background: var(--grant); }
+
+.row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* the "Break after [25] min of use, for [5] min" row */
+.field.wrap-tight { gap: 7px; }
+.field.wrap-tight input[type=number] { width: 62px; }
+.field.wrap-tight .check { margin-right: 2px; }

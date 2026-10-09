@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browsing — XrnFocus</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<main class="viz-root">
+
+  <header class="page-head">
+    <div>
+      <h1>Browsing</h1>
+      <p class="sub" id="subtitle">Where your time goes, recorded on this machine only.</p>
+    </div>
+    <div class="range" id="range" role="group" aria-label="Time range"></div>
+  </header>
+
+  <section class="card notice" id="off" hidden>
+    <h2>Tracking is off</h2>
+    <p class="hint" id="offWhy"></p>
+    <button id="turnOn" class="btn primary">Turn on tracking</button>
+    <p class="hint tight">It records the time you spend per site, to this browser's
+       local storage. Nothing is uploaded, nothing is synced, and you can wipe it
+       whenever you like.</p>
+  </section>
+
+  <div id="content" hidden>
+    <section class="kpis" id="kpis"></section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2 id="trendTitle">Time per day</h2>
+        <span class="card-note" id="trendNote"></span>
+      </div>
+      <div class="chart" id="trend"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Where the time went</h2>
+        <span class="card-note" id="topNote"></span>
+      </div>
+      <div class="toplist" id="top"></div>
+    </section>
+
+    <section class="card" id="heatCard">
+      <div class="card-head">
+        <h2>When you browse</h2>
+        <span class="card-note">by weekday and hour</span>
+      </div>
+      <div class="heat-wrap">
+        <div class="heat" id="heat"></div>
+      </div>
+      <div class="scale" id="heatScale"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Every site</h2>
+        <span class="card-note" id="tableNote"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="table">
+          <thead><tr><th>Site</th><th class="num">Time</th><th class="num">Share</th><th class="num">Per active day</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>This data</h2>
+      <p class="hint">Kept in this browser's local storage and nowhere else. It is not
+         part of the settings that sync between your browsers.</p>
+      <div class="row-btns">
+        <button id="exportJson" class="btn ghost">Export JSON</button>
+        <button id="exportCsv" class="btn ghost">Export CSV</button>
+        <button id="settings" class="btn ghost">Tracking settings</button>
+        <button id="clear" class="btn danger">Delete all history</button>
+      </div>
+    </section>
+  </div>
+
+  <p class="empty" id="empty" hidden>Nothing recorded in this range yet.</p>
+</main>
+
+<div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+
+<script src="../shared/constants.js"></script>
+<script src="../shared/rules.js"></script>
+<script src="../shared/ui.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

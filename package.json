@@ -1,0 +1,17 @@
+{
+  "name": "xrnfocus",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "for f in background/*.js shared/*.js content/*.js popup/*.js options/*.js block/*.js test/*.mjs; do node --check \"$f\" || exit 1; done && node -e \"JSON.parse(require('fs').readFileSync('manifest.json','utf8'))\" && echo OK",
+    "test": "node test/run.mjs",
+    "lint:firefox": "web-ext lint --source-dir . --ignore-files 'test/**' 'node_modules/**'",
+    "run:firefox": "web-ext run --source-dir . --start-url 'https://www.reddit.com'",
+    "build:firefox": "web-ext build --source-dir . --overwrite-dest --ignore-files 'test/**' 'node_modules/**' 'package*.json' 'docs/**'",
+    "smoke": "node test/browser-smoke.mjs"
+  },
+  "devDependencies": {
+    "web-ext": "^8.3.0"
+  }
+}
